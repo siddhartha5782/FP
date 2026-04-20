@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chest X-Ray Assistant</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="glass-header">
+        <div class="logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            <span>CXR Intelli-Assist</span>
+        </div>
+        <div class="status">System Online</div>
+    </header>
+
+    <main class="container">
+        <!-- Left Panel: Imaging -->
+        <section class="panel imaging-panel glass">
+            <div id="upload-zone" class="upload-zone">
+                <input type="file" id="file-input" accept="image/png, image/jpeg" hidden>
+                <div class="upload-content">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    <h3>Upload Chest X-Ray</h3>
+                    <p>Drag & drop or click to browse</p>
+                </div>
+            </div>
+
+            <div id="viewer-zone" class="viewer-zone hidden">
+                <div class="image-wrapper">
+                    <img id="source-image" src="" alt="Uploaded X-Ray">
+                    <img id="heatmap-overlay" class="heatmap-overlay hidden" src="" alt="Grad-CAM Heatmap">
+                    
+                    <div class="loader-overlay hidden" id="image-loader">
+                        <div class="spinner"></div>
+                        <p>Analyzing morphology...</p>
+                    </div>
+                </div>
+                
+                <div class="viewer-controls">
+                    <button class="btn secondary" id="btn-reset">New Scan</button>
+                    <div class="switch-layout">
+                        <span class="label">Heatmap Overlay:</span>
+                        <label class="switch">
+                            <input type="checkbox" id="heatmap-toggle" disabled>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Right Panel: Intelligence -->
+        <section class="panel intelligence-panel glass">
+            
+            <div class="tabs">
+                <button class="tab active" data-target="findings">Clinical Findings</button>
+                <button class="tab" data-target="chat-tab">Copilot Chat</button>
+            </div>
+
+            <!-- Findings Tab -->
+            <div class="tab-content active" id="findings">
+                <div class="predictions-box">
+                    <h3>Identified Pathologies</h3>
+                    <div id="predictions-list" class="predictions-list">
+                        <!-- Filled dynamically -->
+                        <div class="placeholder-text">Upload a scan to initiate analysis.</div>
+                    </div>
+                </div>
+
+                <div class="insight-box">
+                    <h3>Clinical Overview & Guidance</h3>
+                    <div id="clinical-insight" class="insight-content markdown-body">
+                        <!-- Filled dynamically -->
+                        <p class="placeholder-text">Awaiting diagnostic targets...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Tab -->
+            <div class="tab-content" id="chat-tab" style="display: none;">
+                <div class="chat-history" id="chat-history">
+                    <div class="chat-bubble system">
+                        Hello! I am your AI clinical assistant. Once you upload an image, I can answer specific questions regarding the findings and differential diagnosis.
+                    </div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Ask a follow-up question..." disabled>
+                    <button id="send-chat" class="btn primary" disabled>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    </button>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="/static/app.js"></script>
+</body>
+</html>
