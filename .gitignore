@@ -30,9 +30,12 @@ wheels/
 *.sqlite3
 
 # Project Specific
-data/
-models/
+data/vision_test
+data/scans
+models/densenet_final.pth
+models/sol_metrics/run1_best.pt
 temp/
+scrap/
 
 # Frontend
 frontend/node_modules/
