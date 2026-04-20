@@ -2,7 +2,6 @@
 
 Welcome to the master technical documentation for **CXR Intelli-Assist**, a multi-layered AI platform for Chest X-Ray diagnosis. This document provides a transparent, file-by-file breakdown of the entire ecosystem, including the vision models, the RAG-grounded chat system, and the high-fidelity React dashboard.
 
-![robologo](/robologo.png)
 
 ---
 
