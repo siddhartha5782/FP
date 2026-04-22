@@ -33,21 +33,37 @@ NIH_CLASSES = [
     "Emphysema", "Fibrosis", "Hernia", "Infiltration", "Mass",
     "No Finding", "Nodule", "Pleural_Thickening", "Pneumonia", "Pneumothorax"
 ]
+# THRESHOLDS = {
+#     "Atelectasis": 0.70,
+#     "Cardiomegaly": 0.90,
+#     "Effusion": 0.70,
+#     "Infiltration": 0.55,
+#     "Mass": 0.80,
+#     "Nodule": 0.80,
+#     "Pneumonia": 0.85,
+#     "Pneumothorax": 0.75,
+#     "Consolidation": 0.65,
+#     "Edema": 0.90,
+#     "Emphysema": 0.85,
+#     "Fibrosis": 0.85,
+#     "Pleural_Thickening": 0.80,
+#     "Hernia": 0.95
+# }
 THRESHOLDS = {
-    "Atelectasis": 0.70,
-    "Cardiomegaly": 0.90,
-    "Effusion": 0.70,
-    "Infiltration": 0.55,
-    "Mass": 0.80,
-    "Nodule": 0.80,
-    "Pneumonia": 0.85,
-    "Pneumothorax": 0.75,
-    "Consolidation": 0.65,
-    "Edema": 0.90,
-    "Emphysema": 0.85,
-    "Fibrosis": 0.85,
-    "Pleural_Thickening": 0.80,
-    "Hernia": 0.95
+    "Atelectasis": 0.60,
+    "Cardiomegaly": 0.75,
+    "Effusion": 0.60,
+    "Infiltration": 0.50,
+    "Mass": 0.65,
+    "Nodule": 0.65,
+    "Pneumonia": 0.70,
+    "Pneumothorax": 0.65,
+    "Consolidation": 0.60,
+    "Edema": 0.75,
+    "Emphysema": 0.70,
+    "Fibrosis": 0.70,
+    "Pleural_Thickening": 0.65,
+    "Hernia": 0.80
 }
 NO_FINDING_THRESHOLD = 0.50
 class CXRAssistant:
@@ -100,6 +116,7 @@ class CXRAssistant:
         #     print(f"Error loading model weights from {path}: {e}")
         # model.eval()
         # return model
+        print('using model from:',path)
         checkpoint = torch.load(path, map_location=self.device)
 
         if isinstance(checkpoint, dict) and "model_state_dict" in checkpoint:
@@ -144,7 +161,7 @@ class CXRAssistant:
             probs = torch.sigmoid(outputs).squeeze().cpu().numpy()
 
         predictions = []
-
+        print('obtained probs:',probs)
         for i, condition in enumerate(self.class_names):
             if condition == "No Finding":
                 continue
